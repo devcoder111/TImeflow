@@ -1,0 +1,6 @@
+$('#content').html("<%= escape_javascript(render :partial => 'render_table')%>")
+$('#field_to_query').html("<%= escape_javascript(render :partial => 'field_to_query')%>")
+new Chartkick.LineChart("chart-1", <%= @data%>)
+dataTable = $('#example').DataTable({
+  stateSave: true
+})

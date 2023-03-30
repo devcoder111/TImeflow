@@ -1,0 +1,189 @@
+<%= form_with(model: [@project, @time_flow_monitor], id: "monitors" ) do |form| %>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <%= form.text_field :name, class: 'form-control', placeholder: 'Monitor Name' %>
+        <div id="message" style="<%= form.object.errors[:name].present? ? '' : 'display:none;' %>">
+            <%= form.object.errors[:name].first %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="form-group">
+        <%= form.text_field :description, class: 'form-control', placeholder: 'Monitor Description' %>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="table-responsive mt-4 custom_table monitor ">
+        <table class="table">
+          <thead>
+            <tr>
+              <th colspan="4" class="form_img">
+                <form>
+                  <input type="search" name="search" placeholder="Search">
+                    <%= image_tag('Vector.png') %>
+                </form>
+              </th>
+            </tr>
+          </thead>
+          <tr>
+            <td colspan="3">
+              <h4  class="text-left pt-3">Time Window</h4>
+            </td>
+            <td colspan="2" align="right">
+              <ul class="nav nav-tabs float-right " id="myTab" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link " id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"> Filters</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Aggregations</a>
+                </li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td width="30%">
+            <div class="form-group">
+
+            <select class="form-control form-select" id="prev_next" name ="prev_next">
+              <option value="">Select</option>
+
+              <option value="Next" selected="<%= ' selected' if @monitor_field&.time_window&.direction == :next %>">Next</option>
+              <option value="Prev" selected="<%= ' selected' if @monitor_field&.time_window&.direction == :prev %>">Prev</option>
+            </select>
+            </div>
+            </td>
+            <td width="20%">
+              <div class="form-group">
+                <input type="text"  id ="time-duration" name ="time-duration" value ="<%=@monitor_field&.time_window&.duration %>" class="form-control" value="5">
+              </div>
+            </td>
+            <td width="20%">
+            <div class="form-group">
+            <select class="form-control form-select" id="time_unit" name="time_unit">
+                <option value="">Select</option>
+                <option value="Seconds" selected="<%= ' selected' if @monitor_field&.time_window&.direction == :seconds %>"> Seconds</option>
+                <option value="Minutes" selected="<%= ' selected' if @monitor_field&.time_window&.unit == :minutes %>"> Minutes</option>
+                <option value="Hours" selected="<%= ' selected' if @monitor_field&.time_window&.unit == :hours %>">Hours</option>
+                <option value="Days" selected="<%= ' selected' if @monitor_field&.time_window&.unit == :days %>">Days</option>
+                <option value="Weeks" selected="<%= ' selected' if @monitor_field&.time_window&.unit == :weeks %>">Weeks</option>
+                <option value="Months" selected="<%= ' selected' if @monitor_field&.time_window&.unit == :months %>">Months</option>
+                <option value="Years" selected="<%= ' selected' if @monitor_field&.time_window&.unit == :years %>">Years</option>
+              </select>
+            </div>
+            </td>
+            <td width="30%"></td>
+          </tr>
+          <tr class="pt-3">
+            <td colspan="3">
+              <h4  class="text-left pt-3">Search</h4>
+            </td>
+            <td colspan="2" align="right"></td>
+          </tr>
+          <tr>
+            <td width="30%">
+              <div class="form-group">
+                <%= select_tag :event_stream, options_for_select(@event_streams, [@event_stream&.id]), id: 'event_stream_monitor', class: 'form-control form-select', prompt: 'Select' %>
+              </div>
+            </td>
+          </tr>
+          <tbody id="event_definition_fields">
+            <% if @event_definitions.present?%>
+              <% @event_definitions.each_with_index do |esf,i|%>
+                <tr>
+                  <td>
+                    <div class="no-gutters">
+                      <%= text_field_tag esf["field"], '', class: 'form-control', placeholder: esf["field"] %>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="no-gutters">
+                      <%= select_tag "operator-#{i}", options_for_select(ApplicationRecord::SQL_OPERATORS, [esf["condition"]]), class: 'form-control' %>
+                    </div>
+                  </td>
+                    <td>
+                    <div class="no-gutters">
+                      <input type="text" placeholder="Value" id="value-<%=i%>" value="<%=esf["value"]%>" class="form_control" name="value-<%=i%>" >
+                    </div>
+                  </td>
+                </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <%= image_tag('91.png', class: 'back_img') %>
+      <a href="javascript:void(0);" data-turbolinks= "false" class="project_btn mt-3 mb-3" id="preview_btn">Preview</a>
+      <%= image_tag('91.png', class: 'back_img', id: 'preview_arrow', style:'display:none') %>
+    </div>
+  </div>
+  <div class="row" id="preview_table">
+  </div>
+  <div class="row" id="alert_table" style="display:none">
+    <div class="col-md-12">
+      <div class="table-responsive mt-3 custom_table monitor alert_config">
+        <table class="table">
+          <thead>
+            <tr>
+              <th colspan="4" class="form_img">
+                <h5 class="mb-0">Alert Configuration</h5>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td colspan="3">
+                <h4  class="text-left pt-3">Condition</h4>
+              </td>
+              <td colspan="2" align="right">
+                <ul class="nav nav-tabs float-right " id="myTab" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link " id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"> Condition</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Alerts Dteails</a>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td width="50%">
+              <div class="form-group">
+              <select class="form-control form-select" id="alert[alert_condition]" name="alert[alert_condition]">
+                <option value="Number Of Results Greater Than">Number Of Results Greater Than</option>
+                <option value="Sum Of Column Greater Than">Sum Of Column Greater Than</option>
+                <option value="Average Of Column Greater Than">Average Of Column Greater Than</option>
+                <option value="Minimum Of Column Greater Than">Minimum Of Column Greater Than</option>
+                <option value="Maximum Of Column Greater Than">Maximum Of Column Greater Than</option>
+                <option value="Column Contains Of Column Greater Than">Column Contains Of Column Greater Than</option>
+              </select>
+              </div>
+              </td>
+              <td></td>
+            </tr>
+            <tr>
+              <td width="50%">
+                <div class="form-group">
+                  <input type="text" class="form-control" value="<%=@alert&.alert_condition_value %>" id="alert[alert_condition_value]" name="alert[alert_condition_value]">
+                </div>
+              </td>
+              <td></td>
+            </tr>
+            <tr>
+              <td width="50%">
+                <div class="form-group" style ="text-align:left">
+                  <div class="input string required"><label for="alert_title" class="string required"><abbr title="required"></abbr>Name</label><input type="text" value ="<%=@alert&.name %>" size="30" required="required" name="alert[name]" maxlength="255" id="alert_name" class="string required"></div>
+                  <div class="input string required"><label for="alert_description" class="string required"><abbr title="required"></abbr>Description</label><input type="text" value ="<%=@alert&.description %>" size="30" required="required" name="alert[description]" maxlength="255" id="alert_description" class="string required"></div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <%= image_tag('91.png', class: 'back_img') %>
+      <button class="project_btn mt-3 mb-3">Save</button>
+    </div>
+  </div>
+<% end %>

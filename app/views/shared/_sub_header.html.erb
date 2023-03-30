@@ -1,0 +1,67 @@
+<!--Transparent header-->
+<section class="black_header">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 col-md-3">
+        <div class="customer_value">
+          <%= image_tag('67.png') %>
+          <h4 class="mb-0"><%= @project.name %></h4>
+        </div>
+      </div>
+      <div class="col-lg-9 col-md-9 text-right">
+        <ul>
+          <li class="<%= params[:controller] == 'event_streams' ? 'active' : '' %>">
+            <a href="<%= project_event_streams_path(@project) %>">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+                <path d="M1.83398 15.5833L11.0007 20.1666L20.1673 15.5833M1.83398 10.9999L11.0007 15.5833L20.1673 10.9999M11.0007 1.83325L1.83398 6.41659L11.0007 10.9999L20.1673 6.41659L11.0007 1.83325Z" stroke="url(#paint0_linear)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <defs>
+                  <linearGradient id="paint0_linear" x1="16.8114" y1="1.83323" x2="-34.9619" y2="7.30066" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#803C8A"/>
+                    <stop offset="1" stop-color="#FFCDCE"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+              Events
+            </a>
+          </li>
+          <li class="dropdown <%= params[:controller] == 'datas' ? 'active' : '' %>">
+            <a href="<%= project_datas_path(@project) %>" id="dropdownMenuButton" data-toggle="dropdown">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="22" viewBox="0 0 20 22" fill="none">
+                <path d="M18.25 4.58325C18.25 6.10204 14.5563 7.33325 10 7.33325C5.44365 7.33325 1.75 6.10204 1.75 4.58325M18.25 4.58325C18.25 3.06447 14.5563 1.83325 10 1.83325C5.44365 1.83325 1.75 3.06447 1.75 4.58325M18.25 4.58325V17.4166C18.25 18.9383 14.5833 20.1666 10 20.1666C5.41667 20.1666 1.75 18.9383 1.75 17.4166V4.58325M18.25 10.9999C18.25 12.5216 14.5833 13.7499 10 13.7499C5.41667 13.7499 1.75 12.5216 1.75 10.9999" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>Data
+            </a>
+            <div class="dropdown-menu show" aria-labelledby="dropdownMenuButton">
+              <%= link_to 'Analyse', project_datas_path(@project), class: 'dropdown-item' %>
+              <%= link_to 'Simulations', project_simulations_path(@project), class: 'dropdown-item' %>
+              <%= link_to 'Logs', project_time_flow_logs_path(@project), class: 'dropdown-item' %>
+              <a class="dropdown-item" href="#">Import</a>
+              <a class="dropdown-item" href="#">Export</a>
+            </div>
+          </li>
+          <li class="<%= params[:controller] == 'reports' ? 'active' : '' %>">
+            <a href="<%= project_reports_path(@project) %>">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <path d="M4.2 4.2H4.208M4.2 13.8H4.208M2.6 1H15.4C16.2837 1 17 1.71634 17 2.6V5.8C17 6.68366 16.2837 7.4 15.4 7.4H2.6C1.71634 7.4 1 6.68366 1 5.8V2.6C1 1.71634 1.71634 1 2.6 1ZM2.6 10.6H15.4C16.2837 10.6 17 11.3163 17 12.2V15.4C17 16.2837 16.2837 17 15.4 17H2.6C1.71634 17 1 16.2837 1 15.4V12.2C1 11.3163 1.71634 10.6 2.6 10.6Z" stroke="#667085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>Reporting
+            </a>
+          </li>
+          <li class="<%= params[:controller] == 'time_flow_monitors' ? 'active' : '' %>">
+            <a href="<%= project_time_flow_monitors_path(@project) %>">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="18" viewBox="0 0 14 18" fill="none">
+                <path d="M12.5 16.3334V7.16675M7 16.3334V1.66675M1.5 16.3334V10.8334" stroke="#667085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>Monitors
+            </a>
+          </li>
+          <li class="<%= params[:controller] == 'alerts' ? 'active' : '' %>">
+            <a href="<%= project_alerts_path(@project) %>">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="20" viewBox="0 0 22 20" fill="none">
+                <path d="M3.66602 18.25V11.8333M3.66602 8.16667V1.75M10.9993 18.25V10M10.9993 6.33333V1.75M18.3327 18.25V13.6667M18.3327 10V1.75M0.916016 11.8333H6.41602M8.24935 6.33333H13.7493M15.5827 13.6667H21.0827" stroke="#667085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>Alerts
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<!--Transparent header-->

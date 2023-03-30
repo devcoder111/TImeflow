@@ -1,0 +1,47 @@
+<section class="time_flow_logs">
+        <div class="table-responsive data_table">
+          <table class="table" id ="logs">
+            <tr class="border_none">
+              <td colspan="3">
+                <div class="data_content">
+                  <p class="mb-0">Time Flow Logs</p>
+                </div>
+              </td>
+            </tr>
+
+            <tr class="thead">
+              <th><span>Simulation title</span><i class="fa fa-angle-up" aria-hidden="true"></i></th>
+              <th><span>Time</span><i class="fa fa-angle-up" aria-hidden="true"></i></th>
+            </tr>
+
+            <%@logs.each do |log|%>
+
+              <tr class="col-md-12">
+                <td class="col-md-2"><%= log.title%></td>
+                <td class="col-md-4"><%= log.created_at%></td>
+              </tr>
+            <% end %>
+            <tfoot>
+              <tr>
+                <td colspan="1">
+                  <p class="mb-0"><%= page_entries_info(@logs) %></p>
+                </td>
+                <td colspan="2" align="right">
+                  <%= will_paginate(@logs,previous_label: "<i class='fa fa-chevron-left' aria-hidden='true'></i> Previous", next_label: "Next<i class='fa fa-chevron-right' aria-hidden='true'></i>", inner_window: 3) %>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#logs').dataTable();
+  } );
+</script>

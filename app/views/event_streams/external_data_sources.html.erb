@@ -1,0 +1,15 @@
+<section class="event_stream">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <a href="<%= projects_path %>" class="back_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i>Back</a>
+        <div class="event_stream_inner text-center">
+          <%= image_tag('84.png') %>
+          <h3>External Data Sources</h3>
+          <p>No Data Sources are available.</p>
+          <%= link_to 'Add Event Stream', new_project_event_stream_path(@project), class: 'project_btn mt-3' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

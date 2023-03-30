@@ -1,0 +1,87 @@
+- if @reports.blank?
+  section.event_stream
+    .container
+      .row
+        .col-md-12
+          = link_to projects_path, class: "back_btn" do
+            Back
+          .event_stream_inner.text-center
+            = image_tag('report-icon.png')
+            h3 Reports
+            p No reports are available.
+            = link_to 'New Report', new_project_report_path(@project), class: 'project_btn mt-3 white_color_link'
+- else
+  section.event_stream
+    .container
+      .row
+        .col-md-12
+          .customer_value_exam.row
+            .col-md-1
+              = image_tag('71.png')
+            .col-md-6
+              h3
+                = @project.name
+              p
+                = @project.description
+            .col-md-2.text-right
+              p.pt-4
+                | Owner: 
+                = current_user.full_name
+            .col-md-3.text-right.pt-1
+              ul
+                li
+                  a[href="#"]
+                    = image_tag('74.png')
+                li
+                  a[href="#"]
+                    = image_tag('51.png')
+                li
+                  a[href="#"]
+                    = image_tag('73.png')
+                li
+                  a[href="#"]
+                    = image_tag('72.png')
+        .col-md-12
+          .border_bottom
+        .col-md-12.mt-5
+          table.table.event_stream
+            thead
+              tr
+                td[colspan="3"]
+                  h4
+                    | Reports
+                td[colspan="1"]
+                  form
+                    input[type="search" name="search" placeholder="Search"]
+                    label
+                      = image_tag('85.png')
+            tbody
+              - index = 0
+              - @reports.each do |report|
+                tr
+                  td[width="5%"]
+                    = image_tag('Union.png', class: 'img_1')
+                  td[width="5%"]
+                    = image_tag(EventStream::LIST_ICONS[index], class: 'img_2')
+                  - index = index == 8 ? 0 : index + 1
+                  td[width="50%"]
+                    .table_content
+                    - if report.description.present?
+                      h5.mb-0
+                         = report.name
+                      p.mb-0
+                        = report.description
+                    - else
+                      h5.margin-15
+                        = report.name
+                  
+                  td[width="20%"]
+                    .eye_inner
+                      = link_to project_report_path(@project, report) do
+                        = image_tag('eye.png', style: 'display: inline-block;')
+                      = link_to edit_project_report_path(@project, report) do
+                        = image_tag('edit.png', style: 'display: inline-block;')
+                      = link_to project_report_path(@project, report), method: :delete, data: { confirm: 'Are you sure?' } do
+                        = image_tag('delete.png', style: 'display: inline-block;')
+          center
+            = link_to 'New Report', new_project_report_path(@project), class: 'project_btn mt-3 white_color_link align-items-center'

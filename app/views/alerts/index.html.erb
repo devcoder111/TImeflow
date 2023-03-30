@@ -1,0 +1,109 @@
+<% if @alerts.blank? %>
+  <section class="event_stream">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <a href="<%= projects_path %>" class="back_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i>Back</a>
+          <div class="event_stream_inner text-center">
+            <%= image_tag('alert-icon.png') %>
+            <h3>Alerts</h3>
+            <p>No alerts are available.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+<% else %>
+  <section class="event_stream">
+    <div class="container">
+      <div class="row"> 
+        <div class="col-md-12">
+          <div class="customer_value_exam row">
+            <div class="col-md-1">
+              <%= image_tag('71.png') %>
+            </div>
+            <div class="col-md-6">
+              <h3><%= @project.name %></h3>
+              <p><%= @project.description %></p>
+            </div>
+            <div class="col-md-2 text-right">
+              <p class="pt-4">Owner: <%= current_user.full_name %></p>
+            </div>
+            <div class="col-md-3 text-right pt-1">
+              <ul>
+                <li>
+                  <a href="#"><%= image_tag('74.png') %></a>
+                </li>
+                <li>
+                  <a href="#"><%= image_tag('51.png') %></a>
+                </li>
+                <li>
+                  <a href="#"><%= image_tag('72.png') %></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="border_bottom"></div>
+        </div>
+      </div>
+      <div class="row pt-5">
+        <div class="col-md-12"> 
+          <div class="table-responsive data_table alert_table">
+             <table class="table alert"> 
+              <tr class="border_none">
+                <td>
+                  <div class="data_content"> 
+                    <h4 class="pt-3">Alerts</h4>
+                  </div>
+                </td>
+                <td align="right">
+                  <span class="span_show">Show:</span>
+                  <div class="dropdown extra_btn">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  10 <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item" href="#">20</a>
+                      <a class="dropdown-item" href="#">50</a>
+                      <a class="dropdown-item" href="#">100</a>
+                    </div>
+                  </div>
+                </td>
+                <td >
+                  <form>
+                    <input type="search" name="search" placeholder="Search">
+                    <label><%= image_tag('85.png') %></label>
+                  </form>
+                </td>
+              </tr>
+              <% @alerts.each do |alert| %>
+                <tr>
+                  <td width="40%">
+                    <div class="alert_inner">
+                      <div class="alert_img">
+                        <%= image_tag('90.png') %>
+                      </div>
+                      <div class="alert_content">
+                        <h4 class="pt-3"><%= alert.name %></h4>
+                        <p><%= alert.description %></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td width="20%"><p class="pt-4 alert-time"><%= time_ago_in_words(alert.created_at) %> ago</p></td>
+                  <td align="right" width="30%"><button class="status_red mt-4 float-right">Status</button></td>
+                  <td align="right">
+                    <%= link_to project_alert_path(@project, alert), method: :delete, data: { confirm: 'Are you sure?' } do %>
+                      <%= image_tag('72.png', style:'margin-top: 12px;') %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </table>
+          </div>
+        </div>
+      </div> 
+    </div>
+  </section>
+<% end %>

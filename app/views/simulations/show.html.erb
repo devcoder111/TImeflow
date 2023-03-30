@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @simulation.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @simulation.description %>
+</p>
+
+<p>
+  <strong>Project:</strong>
+  <%= @simulation.project_id %>
+</p>
+
+<%= link_to 'Edit', edit_project_simulation_path(@project, @simulation) %> |
+<%= link_to 'Back', project_simulations_path(@project) %>

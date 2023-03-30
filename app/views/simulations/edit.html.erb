@@ -1,0 +1,16 @@
+<section class="event_stream">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 pb-3">
+        <a href="<%= project_simulations_path %>" class="back_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i>Back</a>
+        <div class="new_event text-center pt-5">
+          <h3 class="pb-4">Editing Simulation</h3>
+          <%= render partial: 'form', locals: {project: @project, simulation: @simulation} %>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<%= link_to 'Show', project_simulation_path(@project, @simulation) %> |
+<%= link_to 'Back', project_simulations_path(@project) %>

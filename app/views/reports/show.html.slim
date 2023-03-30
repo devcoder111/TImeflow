@@ -1,0 +1,84 @@
+p#notice
+  = notice
+section.event_stream
+  .container
+    h3.pb-4.text-center
+      = @report.name
+    .d-flex.justify-content-center
+      ul#myTab.nav.nav-tabs.center[role="tablist"]
+        li.nav-item
+          a#home-tab.nav-link[data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"]
+            | Show
+        li.nav-item
+          a#profile-tab.nav-link.active[data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"]
+            | Edit
+    .row.pt-4
+      .col-md-12
+        - @report.report_items.each do |report_item|
+          - next if report_item.event_stream.nil?
+          - results = get_filtered_data(report_item)
+          .table-responsive.data_table
+            table.table
+              tr.border_none
+                td[colspan="3"]
+                  .data_content
+                    p.mb-0
+                      = report_item.event_stream&.name
+                    h6.pb-1
+                      | Total Records in Set: #{results.count}
+                td[colspan="1" align="right"]
+                  span.span_show
+                    | Show:
+                  .dropdown.extra_btn
+                    button#dropdownMenuButton.btn.btn-secondary.dropdown-toggle[type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+                      |  10 
+                      i.fa.fa-angle-down[aria-hidden="true"]
+                    .dropdown-menu[aria-labelledby="dropdownMenuButton"]
+                      a.dropdown-item[href="#"]
+                        | 20
+                      a.dropdown-item[href="#"]
+                        | 50
+                      a.dropdown-item[href="#"]
+                        | 100
+                td[colspan="2"]
+                  form
+                    input[type="search" name="search" placeholder="Search"]
+                    label
+                      = image_tag('85.png')
+              tr.thead
+                - results.columns.each do |column|
+                  th
+                    span
+                      = column.titleize
+                    i.fa.fa-angle-up[aria-hidden="true"]
+
+              - results.rows.each do |rows|
+                tr.col-md-12
+                  - rows.each do |row|
+                    td.col-md-2
+                      = row
+
+              tfoot
+                tr
+                  td[colspan="3"]
+                    p.mb-0
+                  td[colspan="4" align="right"]
+
+    - ['column_chart', 'bar_chart', 'line_chart', 'area_chart'].each do |chart|
+      .row
+        .col-md-12.mt-3
+          .row.event_table.thead
+            .col-md-2
+              | Source Data
+          .nested-fields.pt-3.custom-table-new
+            .row
+              .col-md-5
+                .form-group
+                  |  Total Records In Set: 3000 
+            .row
+              .col-md-5
+                .form-group
+                  = display_chart(chart, Simulation.group(:simulation_type).count)
+script[type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"]
+script[type="text/javascript"]
+  |  $( document ).on('turbolinks:load', function() { $('#example').DataTable(); } ); 

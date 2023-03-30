@@ -1,0 +1,12 @@
+- event_stream.event_stream_fields.each_with_index do |esf,i|
+  tr
+    td
+      .no-gutters
+        = text_field_tag esf.name, '', class: 'form-control', placeholder: esf.name
+    td
+      .no-gutters
+        = select_tag "operator-#{i}", options_for_select(ApplicationRecord::SQL_OPERATORS), class: 'form-control'
+    td
+      .no-gutters
+        input.form-control[type="text" placeholder="Value" id="value#{i}" name="value-#{i}"]
+    td

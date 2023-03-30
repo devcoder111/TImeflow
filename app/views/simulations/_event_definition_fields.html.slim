@@ -1,0 +1,10 @@
+- event_stream.event_stream_fields.each do |esf|
+  .col-md-12
+    .form-group
+      = text_field_tag "simulation[simulation_fields_attributes][#{@element_number}][event_definitions][#{esf.name.parameterize(separator: '_')}]", '', class: 'form-control', placeholder: esf.name
+.col-md-12
+  .form-group
+    label.check_box
+      = check_box_tag "simulation[simulation_fields_attributes][#{@element_number}][regular_expression]"
+      span.checkmark
+    | Contains Regular Expression 

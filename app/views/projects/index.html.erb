@@ -1,0 +1,57 @@
+<section class="your_project">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h2 class="text-center pb-4">Your Projects</h2>
+      </div>
+    </div>
+    <div class="row">
+      <% color = ['color4', 'color8', 'color5'] %>
+      <% index = 0 %>
+
+      <% @projects.each do |project| %>
+        <div class="col-md-12 ">
+          <div class="your_inner">
+            <div class="your_project_inner <%= color[index] %>">
+              <% index = (index == 2 ? 0 : index+1) %>
+              <div class="your_img mt-2">
+                <%= image_tag('57.png') %>
+              </div>
+              <div class="your_content">
+                <h3><%= link_to project.name, project_event_streams_path(project) %></h3>
+                <p class="text-light mb-0 pt-1"><%= current_user.full_name %></p>
+              </div>
+              <div class="your_right text-right">
+                <ul>
+                  <li><a href="<%= edit_project_path(project) %>">
+                    <%= image_tag('58.png') %></a>
+                  </li>
+                  <li><a href="<%= project_event_streams_path(project) %>">
+                    <%= image_tag('50.png') %></a>
+                  </li>
+                  <li><a href="#">
+                    <%= image_tag('59.png') %></a>
+                  </li>
+                  <li>
+                    <%= link_to project_path(project), method: 'delete', data: { confirm: 'Are you sure?' } do %>
+                      <%= image_tag('60.png') %>
+                    <% end %>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="row bottom_btn mt-1 mb-5">
+      <div class="col-md-6 col-6 text-right">
+        <button class="import_btn">Import Project</button>
+      </div>
+      <div class="col-md-6 text-left col-6 ">
+        <%= link_to 'Create a New Project', new_project_path, class: 'project_btn white_color_link' %>
+      </div>
+    </div>
+  </div> 
+</section>

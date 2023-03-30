@@ -1,0 +1,54 @@
+.table-responsive.mt-4.custom_table.monitor
+  table.table
+    thead
+      tr
+        th.form_img colspan="4" 
+          form
+            = f.text_field :name, class: 'form-control', placeholder: 'Title', type: 'search'
+            = image_tag('Vector.png')
+    tr
+      td colspan="3" 
+        h4.text-left.pt-3 Filter
+      td align="right" colspan="2"
+        .customer_value_exam
+          ul
+            li
+              a[href="#"]
+                = image_tag('74.png')
+            li
+              a[href="#"]
+                = image_tag('51.png')
+            li.dropdown
+              a href="#"
+                = image_tag('73.png')
+            li
+              a[href="#"]
+                = image_tag('eye.png')
+    tr
+      td
+        .form-group
+          = f.text_field :duration, class: 'form-control', placeholder: 'Next'  
+      td
+        .form-group
+          = f.text_field :duration, class: 'form-control', placeholder: 'Duration'
+      td 
+        .form-group
+          = f.select :time_period, options_for_select(ApplicationRecord::TIME_PERIODS), { prompt: 'Select' }, { class: 'form-control form-select' }
+    tr
+      td 
+        .form-group
+          = f.select :event_stream_id, options_for_select(@project.event_streams.pluck(:name, :id)), { prompt: 'Select' }, { class: 'form-control form-select new_report_event_stream' }
+
+    tbody#new_report_event_stream_columns_0
+    / - 3.times do
+    /   = f.fields :data, model: OpenStruct.new(f.object.data) do |field|
+    /     tr
+    /       td width="30%" 
+    /         .form-group
+    /           = field.text_field :field, class: 'form-control', id: 'field_name', placeholder: 'Column'
+    /       td width="20%" 
+    /         .form-group
+    /           = field.select :operator, options_for_select(ApplicationRecord::SQL_OPERATORS), {}, { id: 'event_stream_id', class: 'form-control form-select' }
+    /       td width="20%" 
+    /         .form-group
+    /           = field.text_field :value, class: 'form-control', id: 'field_value', placeholder: 'Value'

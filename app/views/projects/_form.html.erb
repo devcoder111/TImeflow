@@ -1,0 +1,13 @@
+<%= form_with(model: @project) do |form| %>
+  <div class="form-group">
+    <%= form.text_field :name, class: 'form-control', placeholder: 'Name' %>
+    <div id="message" style="<%= form.object.errors[:name].present? ? '' : 'display:none;' %>">
+      <%= form.object.errors[:name].first %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= form.text_area :description, class: 'form-control', placeholder: 'Description' %>
+  </div>
+  <%= form.submit 'Submit', class: 'project_btn mb-5 mt-4' %>
+<% end %>

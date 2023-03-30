@@ -1,0 +1,38 @@
+<section class="login_form">
+  <div class="container">
+    <div class="row">
+      <div class="offset-md-4 col-md-4 col-xs-12">
+        <div class="login_inner">
+          <%= image_tag('logo.png') %>
+          <!-- <form action="#"> -->
+          <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+            <div class="form-group">
+              <%= f.email_field :email, autofocus: true, placeholder: 'Email', class: 'form-control' %>
+              <label>
+                <i class="fa fa-user" aria-hidden="true"></i>
+              </label>
+              <div id="message" style="<%= f.object.errors[:email].present? ? '' : 'display:none;' %>">
+                <%= f.object.errors[:email].first %>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= f.password_field :password,class: 'form-control', placeholder: 'Password' %>
+              <label>
+                <i class="fa fa-lock" aria-hidden="true"></i>
+              </label>
+              <div id="message" style="<%= f.object.errors[:password].present? ? '' : 'display:none;' %>">
+                <%= f.object.errors[:password].first %>
+              </div>
+            </div>
+            <button type="submit" class="btn btn_custom mb-5 mt-4" onclick="location.href = 'welcome.html'">Login</button>
+          <% end %>
+          <div class="btn_bottom text-center">
+            <span class="back_btn text-center text-light">Don’t have an account? <%= link_to 'Sign Up', new_user_registration_path %>
+            </span> 
+          </div>
+          <!-- </form> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

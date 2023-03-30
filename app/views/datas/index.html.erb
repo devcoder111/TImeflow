@@ -1,0 +1,123 @@
+<% if @event_streams.present? %>
+  <section class="event_stream">
+    <div class="container">
+      <div class="row"> 
+          <div class="col-md-12">
+              <div class="customer_value_exam row">
+                  <div class="col-md-1">
+                      <%= image_tag('71.png') %>
+                  </div>
+                  <div class="col-md-6">
+                      <h3><%= @project.name %></h3>
+                      <p><%= @project.description %></p>
+                  </div>
+                  <div class="col-md-2 text-right">
+                      <p class="pt-4">Owner: <%= current_user.full_name %></p>
+                  </div>
+                  <div class="col-md-3 text-right pt-1">
+                      <ul>
+                          <li>
+                              <a href="#"><%= image_tag('74.png') %></a>
+                          </li>
+                          <li>
+                              <a href="#"><%= image_tag('51.png') %></a>
+                          </li>
+                          <li>
+                              <a href="#"><%= image_tag('72.png') %></a>
+                          </li>
+                      </ul>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-12">
+              <div class="border_bottom"></div>
+          </div>
+      </div>
+      <div class="row data_tab pt-4">
+        <div class="col-md-3">
+          <h4 class="pt-2 pb-2">Data</h4>
+        </div>
+        <div class="col-md-3">
+            <div class="dropdown">
+            <%= form_for "", url: "datas/set_event_stream", remote: true do |f| %>
+                <%= f.select :event_stream_id, options_from_collection_for_select(@event_streams, 'id', 'name'), {}, onchange: "javascript:this.form.commit.click(); $('.search_event_stream').val($(this).val())", class: "form-select form-control"  %>
+                <%= f.submit 'save', class: "mb-header" %>
+              <% end %>
+            </div>
+        </div>
+        <%= form_for :search, url: "datas/search_results", remote: true, :html => {:class => "form-inline col-md-6"} do |f| %>
+
+          <div class="form-group mx-sm-3 mb-2">
+            <%= f.hidden_field "event_stream_id", value: @event_stream.id, class: "search_event_stream" %>
+            <%= f.select :time_control, options_for_select([["Previous", "prev"], ["Next", "next"]], "prev"), {}, { class: "form-select form-control" }%>
+          </div>
+
+          <div class="form-group mb-1">  
+            <%= f.number_field :duration, { class: "form-control" }%>
+          </div>
+
+          <div class="form-group mx-sm-3 mb-1">
+            <%= f.select :time_frame, options_for_select([["Seconds", "second"],["Minutes", "minute"],["Hours", "hour"], ["Days", "day"], ["Weeks", "week"], ["Months", "month"]], "second"), {},{ class: "form-control" }%>
+          </div>
+
+          <div class="form-group mx-sm-3 mb-1">
+          <%= f.submit "Submit", class: "btn btn-primary" %>
+          </div>
+        <% end %>
+      </div>
+      <div class="row pt-4">
+        <div class="col-md-12" id="content"> 
+          <%= render 'render_table', event_stream: @event_stream, clickhouse_data: @clickhouse_data %>
+        </div>
+      </div>
+      <div class="row mt-5">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-body">
+              <%= form_for :search, url: "datas/search_results", remote: true, :html => {:class => "form-inline"} do |f| %>
+                <div class="form-group mx-sm-5 mb-3">
+                  <%= f.hidden_field "event_stream_id", value: @event_stream.id, class: "search_event_stream" %>
+                  <%= f.select :chart_type, options_for_select([["Time Series", "line_chart"], ["Histogram", "histogram"]]), {}, onchange: "javascript:this.form.commit.click();", class: "form-select form-control" %>
+                </div>
+                <div class="form-group mx-sm-5 mb-3" id="field_to_query">
+                  <%= f.select :field_to_query, options_from_collection_for_select(@event_stream.event_stream_fields, 'name', 'name'), {}, onchange: "javascript:this.form.commit.click();", class: "form-select form-control"  %>
+                </div>
+                <div class="form-group mx-sm-5 mb-3">
+                  <%= f.select :bucketing, options_for_select([["Bucketing By Seconds", "toStartOfSecond"],["Bucketing By Minutes", "toStartOfMinute"],["Bucketing By Hours", "toStartOfHour"], ["Bucketing By Days", "toStartOfDay"], ["Bucketing By Weeks", "toStartOfWeek"], ["Bucketing By Months", "toStartOfMonth"]]), {}, onchange: "javascript:this.form.commit.click();", class: "form-select form-control"%>
+                </div>
+                <%= f.submit 'save', class: "mb-header" %>
+              <% end %>
+              <div class="card-body" id="line-chart">
+                <%= render 'plot_line_graph', graph_data: @graph_data %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </section>
+
+<% else %>
+  <!--Event Stream--> 
+  <section class="event_stream">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="event_stream_inner text-center">
+            <%= image_tag('icon_number_of_reports.png') %>
+            <h3>Data</h3>
+            <p>No data is available.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--Event Stream-->
+<% end %>
+
+<script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+
+<script type="text/javascript" >
+  dataTable = $('#example').DataTable({
+    stateSave: true
+  })
+</script>

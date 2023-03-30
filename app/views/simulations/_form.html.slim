@@ -1,0 +1,54 @@
+= form_with(model: [@project, simulation]) do |form|
+  - if simulation.errors.any?
+    #error_explanation
+      h4
+        = pluralize(simulation.errors.count, "error")
+        |  prohibited this simulation from being saved:
+      ul
+        - simulation.errors.each do |error|
+          li
+            = error.full_message
+  .row
+    .col-md-6
+      .row
+        .col-md-12
+          = form.text_field :name, class: 'form-control', placeholder: 'Name'
+          label
+            = image_tag('69.png')
+      .row
+        .col-md-12
+            = form.select :replica, options_for_select(1..10), {}, { class: 'form-select form-control' }
+    .col-md-6
+      .form-group
+        = form.text_area :description, class: 'form-control', rows: 5, placeholder: 'Description'
+  .row
+    .col-md-6
+      .form-group
+        = form.select :simulation_type, options_for_select(Simulation::RUN_TYPES.map{|x| [x[0], x[0]]}), {}, { class: 'form-select form-control', id: 'simulation_type' }
+    .col-md-6
+      .form-group
+        = form.text_field :value, class: 'form-control d-none', id: 'simulation_type_value', placeholder: 1
+  .row
+    .col-md-12.mt-3
+      .row.event_table.thead
+        .col-md-2
+          | Step Name
+        .col-md-2
+          | Topic
+        .col-md-3
+          | Event Definition
+        .col-md-2
+          | Delay
+        .col-md-3.text-center
+          | Actions
+      #simulation_fields
+        = form.fields_for :simulation_fields do |ff|
+          .nested-fields.pt-3.custom-table-new
+            = render partial: 'fields', locals: {f: ff}
+        .links
+          = link_to_add_association('New Step', form, :simulation_fields, render_options: {}, class: 'import_btn mt-4 mb-3 mr-2' )
+
+  .row
+    .col-md-12
+      .border_final.mt-4
+        = form.submit "Submit", class: "custom_submit_button mt-5 mb-5"

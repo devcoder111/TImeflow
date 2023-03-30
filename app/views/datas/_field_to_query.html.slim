@@ -1,0 +1,1 @@
+= select_tag "search[field_to_query]", options_from_collection_for_select(@event_stream.event_stream_fields, 'name', 'name'), onchange: "javascript:this.form.commit.click();", class: "form-select form-control"

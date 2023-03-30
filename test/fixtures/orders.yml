@@ -1,0 +1,20 @@
+# == Schema Information
+#
+# Table name: ORDERS
+#
+#  delivery_type :string           not null
+#  timestamp     :datetime         not null
+#  value         :integer          not null
+#  customer_id   :integer          not null
+#  order_id      :integer          not null
+#
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one: {}
+# column: value
+#
+two: {}
+# column: value

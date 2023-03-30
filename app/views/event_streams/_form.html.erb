@@ -1,0 +1,50 @@
+<%= form_with(model: [@project, @event_stream]) do |form| %>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <%= form.text_field :name, class: 'form-control', placeholder: 'Name' %>
+        <label><%= image_tag('69.png') %></label>
+        <div id="message" style="<%= form.object.errors[:name].present? ? '' : 'display:none;' %>">
+          <%= form.object.errors[:name].first %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="form-group">
+        <%= form.text_field :description, class: 'form-control', placeholder: 'Event Stream Description' %>
+      </div>
+    </div>
+
+    <div class="col-md-12 mt-3">
+      <div class="row event_table thead">
+        <div class="col-md-2">Field Name</div>
+        <div class="col-md-3">Description</div>
+        <div class="col-md-2">Field Type</div>
+        <div class="col-md-2">Data Type</div>
+        <div class="col-md-1 text-center">Required</div>
+        <div class="col-md-2 text-center">Actions</div>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div id="event_stream_fields">
+        <%= form.fields_for :event_stream_fields do |ff| %>
+          <%= render partial: 'event_streams/event_stream_fields', locals: {f: ff} %>
+        <% end %>
+      </div>
+
+      <div class="links">
+        <%= link_to_add_association(content_tag(:i, '', class: 'fa fa-plus') + '' + 'New Field', form, :event_stream_fields, class: 'import_btn mt-4 mb-3 mr-2') %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row ">
+    <div class="col-md-12">
+      <div class="border_final mt-4">
+        <%= form.submit "Submit", class: "custom_submit_button mt-5 mb-5" %>
+      </div>
+    </div>
+  </div>
+<% end %>

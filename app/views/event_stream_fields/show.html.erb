@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @event_stream_field.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @event_stream_field.description %>
+</p>
+
+<p>
+  <strong>Event stream:</strong>
+  <%= @event_stream_field.event_stream_id %>
+</p>
+
+<p>
+  <strong>Data type:</strong>
+  <%= @event_stream_field.data_type %>
+</p>
+
+<p>
+  <strong>Stream type:</strong>
+  <%= @event_stream_field.stream_type %>
+</p>
+
+<p>
+  <strong>Required:</strong>
+  <%= @event_stream_field.required %>
+</p>
+
+<%= link_to 'Edit', edit_event_stream_field_path(@event_stream_field) %> |
+<%= link_to 'Back', event_stream_fields_path %>

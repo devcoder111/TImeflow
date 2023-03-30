@@ -1,0 +1,20 @@
+<div class="table-responsive data_table">
+  <table id="example" class="table table-bordered" cellspacing="0" width="100%">
+    <thead>
+      <th><span>Timestamp</><i class="fa fa-angle-up"></span></i></th>
+      <% @event_stream.event_stream_fields.each do |event_field| %>
+        <th><span><%= event_field.name %><i class="fa fa-angle-up"></i></span></th>
+      <% end %>
+    </thead>
+    <tbody>
+      <%@clickhouse_data.each do |c_data|%>
+        <tr>
+          <td class="col-md-2"><%= c_data["timestamp"] %></td>
+          <% @event_stream.event_stream_fields.each do |event_field| %>
+            <td class="col-md-2"><%= c_data[event_field.name.parameterize(separator: '_')] %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

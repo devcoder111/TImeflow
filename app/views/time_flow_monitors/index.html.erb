@@ -1,0 +1,121 @@
+<% if @time_flow_monitors.blank? %>
+  <section class="event_stream">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="event_stream_inner text-center">
+            <%= image_tag('monitor-icon.png') %>
+            <h3>Monitors</h3>
+            <p>No monitors are available.</p>
+            <%= link_to 'Add Monitor', new_project_time_flow_monitor_path(@project), class: "project_btn mt-3 white_color_link" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+<% else %>
+  <section class="event_stream">
+      <div class="container">
+          <div class="row">
+              <div class="col-md-12">
+                  <div class="customer_value_exam row">
+                      <div class="col-md-1">
+                          <%= image_tag('71.png') %>
+                      </div>
+                      <div class="col-md-6">
+                          <h3><%= @project.name %></h3>
+                          <p><%= @project.description %></p>
+                      </div>
+                      <div class="col-md-3 text-right">
+                          <p class="pt-4">Owner: <%= current_user.full_name %></p>
+                      </div>
+                      <div class="col-md-2 text-right pt-1">
+                          <ul>
+                              <li>
+                                  <a href="#"><%= image_tag('74.png') %></a>
+                              </li>
+                             <li>
+                                  <a href="#"><%= image_tag('51.png') %></a>
+                              </li>
+                              <li>
+                                  <a href="#"><%= image_tag('72.png') %></a>
+                              </li>
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-12">
+                <div class="border_bottom"></div>
+              </div>
+
+              <div class="col-md-12 mt-5">
+                <table class="table event_stream">
+                  <thead>
+                    <tr>
+                      <td colspan="3">
+                        <h4>Monitors</h4>
+                      </td>
+                      <td colspan="1">
+                        <form>
+                          <input type="search" name="search" placeholder="Search">
+                          <label><%= image_tag('85.png') %></label>
+                        </form>
+                      </td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% @time_flow_monitors.each do |monitor| %>
+                      <tr>
+                          <td width="5%">
+                            <%= image_tag('Union.png', class: 'img_1') %>
+                          </td>
+                          <td width="5%">
+                            <%= image_tag('75.png', class: 'img_2') %>
+                          </td>
+                          <td width="50%">
+                            <div class="table_content">
+                              <% if monitor.description.present? %>
+                                <h5 class="mb-0"><%= monitor.name %> </h5>
+                                <p class="mb-0"><%= monitor.description %></p>
+                              <%else%>
+                                <h5 class="margin-15"><%= monitor.name %> </h5>
+                              <%end%>
+                            </div>
+                          </td>
+                          <td width="20%">
+                            <div class="eye_inner">
+                              <% if !monitor.sidekiq_job_id%>
+                                <%= link_to start_project_time_flow_monitor_path(@project, monitor), "data-turbolinks": "false" do %>
+                                  <%= image_tag('start.png') %>
+                                <% end %>
+                              <% else %>
+                                <%= link_to pause_project_time_flow_monitor_path(@project, monitor), "data-turbolinks": "false" do %>
+                                  <%= image_tag('pause.png') %>
+                                <% end %>
+                              <% end %>
+
+                              <%= link_to edit_project_time_flow_monitor_path(@project, monitor) do %>
+                                <%= image_tag('eye.png') %>
+                              <% end %>
+
+                              <%= link_to edit_project_time_flow_monitor_path(@project, monitor) do %>
+                                <%= image_tag('edit.png', style: 'display: inline-block;') %>
+                              <% end %>
+
+                              <%= link_to project_time_flow_monitor_path(@project, monitor), method: :delete, data: { confirm: 'Are you sure?' } do %>
+                                <%= image_tag('delete.png') %>
+                              <% end %>
+                            </div>
+                          </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+                <center>
+                  <%= link_to 'Add Monitor', new_project_time_flow_monitor_path(@project), class: "project_btn mt-3 white_color_link align-items-center" %>
+                </center>
+              </div>
+          </div>
+      </div>
+  </section>
+<% end %>

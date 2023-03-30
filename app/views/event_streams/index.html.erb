@@ -1,0 +1,114 @@
+<% if @event_streams.present? %>
+  <section class="event_stream">
+    <div class="container">
+      <div class="row"> 
+        <div class="col-md-12">
+          <div class="customer_value_exam row">
+            <div class="col-md-1">
+              <%= image_tag('71.png') %>
+            </div>
+            <div class="col-md-6">
+              <h3><%= @project.name %></h3>
+              <p><%= @project.description %></p>
+            </div>
+            <div class="col-md-2 text-right">
+              <p class="pt-4">Owner: <%= current_user.full_name %></p>
+            </div>
+
+            <div class="col-md-3 text-right pt-1">
+              <ul>
+                <li>
+                  <a href="#"><%= image_tag('74.png') %></a>
+                </li>
+                <li>
+                  <a href="#"><%= image_tag('51.png') %></a>
+                </li>
+                <li>
+                  <a href="#"><%= image_tag('72.png') %></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="border_bottom"></div>
+        </div>
+
+        <div class="col-md-12 mt-5">
+          <table class="table event_stream"> 
+            <thead>
+              <tr>
+                <td colspan="3">
+                  <h4>Event Stream</h4>
+                </td>
+                <td colspan="1">
+                  <form>
+                    <input type="search" name="search" placeholder="Search">
+                    <label><%= image_tag('85.png') %></label>
+                  </form>
+                </td>
+              </tr>   
+            </thead>
+            <tbody>
+              <% index = 0 %>
+              <% @event_streams.each do |event_stream| %>
+                <tr>
+                  <td width="5%"><%= image_tag('Union.png', class: 'img_1') %></td>
+                  <td width="5%"><%= image_tag(EventStream::LIST_ICONS[index], class: 'img_2') %></td>
+
+                  <% index = index == 8 ? 0 : index + 1 %>
+
+                  <td width="50%">
+                    <div class="table_content">
+                      <% if event_stream.description.present? %>
+                        <h5 class="mb-"><%= event_stream.name %></h5>
+                        <p class="mb-0"><%= event_stream.description %></p>
+                      <% else %>
+                        <h5 class="margin-15"><%= event_stream.name %></h5>
+                      <% end %>
+                    </div>
+                  </td>
+                  <td width="20%">
+                    <div class="eye_inner">
+                      <h6><%= event_stream.event_stream_fields.count %></h6>
+
+                      <%= link_to edit_project_event_stream_path(@project, event_stream) do %>
+                        <%= image_tag('eye.png') %>
+                      <% end %>
+                      <%= link_to edit_project_event_stream_path(@project, event_stream) do %>
+                        <%= image_tag('edit.png', style: 'display: inline-block;') %>
+                      <% end %>
+                      <%= link_to project_event_stream_path(@project, event_stream), method: :delete, data: { confirm: 'Are you sure?' } do %>
+                        <%= image_tag('delete.png') %>
+                      <% end %>
+                    </div>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+          <center>
+            <%= link_to 'Add Event Stream', new_project_event_stream_path(@project), class: 'project_btn mt-3 white_color_link align-items-center' %>
+          </center>
+        </div>
+      </div>
+    </div>
+  </section>
+<% else %>
+  <!--Event Stream--> 
+  <section class="event_stream">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="event_stream_inner text-center">
+            <%= image_tag('event-icon.png') %>
+            <h3>Event Streams</h3>
+            <p>No Event streams available.</p>
+            <%= link_to 'Add Event Stream', new_project_event_stream_path(@project), class: 'project_btn mt-3 white_color_link' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--Event Stream-->
+<% end %>

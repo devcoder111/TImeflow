@@ -1,0 +1,7 @@
+<% if @chart_type == 'histogram' %>
+  new Chartkick.BarChart("chart-1", <%= @data%>)
+  $('#search_bucketing').hide()
+<% else %>
+  new Chartkick.LineChart("chart-1", <%= @data%>)
+  $('#search_bucketing').show()
+<% end %>

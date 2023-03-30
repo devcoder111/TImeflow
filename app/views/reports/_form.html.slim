@@ -1,0 +1,42 @@
+= simple_form_for [project, report] do |form|
+  .row
+    - if report.errors.any?
+      #error_explanation
+        h2
+          = pluralize(report.errors.count, "error")
+          |  prohibited this report from being saved:
+        ul
+          - report.errors.each do |error|
+            li
+              = error.full_message
+
+  .row
+    .new_event.text-center.pt-5
+      h3.pb-5
+        | New Report
+      #myTabContent.tab-content
+        #home.tab-pane.fade.show.active[role="tabpanel" aria-labelledby="home-tab"]
+          .row
+            .col-md-6
+              .form-group
+                = form.text_field :name, class: 'form-control', placeholder: 'Report Name'
+                |  <div id="message" style="
+                = form.object.errors[:name].present? ? '' : 'display:none;'
+                | "> 
+                = form.object.errors[:name].first
+          .col-md-6
+            .form-group
+              = form.text_field :description, class: 'form-control', placeholder: 'Report Description'
+
+          .col-md-12#report_items
+            = form.fields_for :report_items do |ff|
+              .nested-fields.pt-3
+                = render partial: 'report_items', locals: {f: ff}
+            .links
+              = link_to_add_association form, :report_items, render_options: {}, class: 'import_btn mt-4 mb-3 ml-2' do
+                i.fa.fa-plus[aria-hidden="true"] 
+                | Add Items
+
+          .col-md-12
+            .border_final.mt-4
+              = form.submit "Save", class: 'project_btn mt-5 mb-5'

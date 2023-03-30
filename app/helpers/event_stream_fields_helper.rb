@@ -1,0 +1,2 @@
+module EventStreamFieldsHelper
+end

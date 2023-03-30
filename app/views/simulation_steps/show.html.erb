@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @simulation_step.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @simulation_step.description %>
+</p>
+
+<p>
+  <strong>Sm type:</strong>
+  <%= @simulation_step.sm_type %>
+</p>
+
+<p>
+  <strong>Simulation:</strong>
+  <%= @simulation_step.simulation_id %>
+</p>
+
+<%= link_to 'Edit', edit_simulation_step_path(@simulation_step) %> |
+<%= link_to 'Back', simulation_steps_path %>

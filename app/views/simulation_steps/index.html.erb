@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Simulation Steps</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Sm type</th>
+      <th>Simulation</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @simulation_steps.each do |simulation_step| %>
+      <tr>
+        <td><%= simulation_step.name %></td>
+        <td><%= simulation_step.description %></td>
+        <td><%= simulation_step.sm_type %></td>
+        <td><%= simulation_step.simulation_id %></td>
+        <td><%= link_to 'Show', simulation_step %></td>
+        <td><%= link_to 'Edit', edit_simulation_step_path(simulation_step) %></td>
+        <td><%= link_to 'Destroy', simulation_step, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Simulation Step', new_simulation_step_path %>

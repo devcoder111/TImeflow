@@ -1,0 +1,19 @@
+doctype html
+html
+  head
+    title
+      | Timeflow | Analytics Console
+    meta[name="viewport" content="width=device-width,initial-scale=1"]
+    link rel="stylesheet" href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css' type='text/css'
+    link rel="stylesheet" href='https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css' type='text/css'
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+    = Gon::Base.render_data
+  body
+    = render 'shared/header'
+    - unless params[:controller].eql?('home') || params[:controller].eql?('projects')
+      = render 'shared/sub_header'
+    = yield
+    = yield :charts_js

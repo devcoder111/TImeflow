@@ -1,0 +1,49 @@
+.col-md-12
+  .table-responsive.data_table.mt-3.mb-3
+    table.table.monitor_table
+      thead.custom-thead
+        tr
+          th.form_img[colspan="4"]
+            h5.mb-0
+              | Query Result
+      tbody
+        tr.border_none
+          td[colspan="2" align="right"]
+            .data_content
+              h6.pt-2.text-left
+                | Total Records in Set: #{@total_records}
+          td[colspan="1" align="right"]
+            span.span_show
+              | Show:
+            .dropdown.extra_btn
+              button#dropdownMenuButton.btn.btn-secondary.dropdown-toggle[type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+                |  10
+                i.fa.fa-angle-down[aria-hidden="true"]
+              .dropdown-menu[aria-labelledby="dropdownMenuButton"]
+                a.dropdown-item[href="#"]
+                  | 20
+                a.dropdown-item[href="#"]
+                  | 50
+                a.dropdown-item[href="#"]
+                  | 100
+          td[colspan="1"]
+            form
+              input[type="search" name="search" placeholder="Search"]
+              label
+                = image_tag('85.png')
+        - if total_records > 1
+          tr.thead
+            - columns.each do |column|
+              th
+                span
+                  = column.titleize
+                i.fa.fa-angle-up[aria-hidden="true"]
+          - rows.each do |records|
+            tr
+              - records.each do |value|
+                td
+                  = value
+  = image_tag('91.png', class: 'back_img')
+  a#alert_btn.project_btn.mt-3.mb-3[href="javascript:void(0);"]
+    | Alert
+  = image_tag('91.png', class: 'back_img', id: 'alert_arrow', style:'display:none')

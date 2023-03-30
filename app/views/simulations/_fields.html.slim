@@ -1,0 +1,30 @@
+.row
+  .col-md-2
+    .form-group
+      = f.text_field :step_name, class: 'form-control', placeholder: 'Name'
+  .col-md-2
+    .form-group
+      = f.select :event_stream_id, options_for_select(@project.event_streams.pluck(:name, :id)), { prompt: 'Select'}, { class: 'form-select form-control event_stream_dropdown'}
+  .col-md-3
+    .row id="event_definition_fields_0" class="event_definition_fields"
+  .col-md-2
+    .row
+      .col-md-12
+        .form-group
+          = f.select :delay_type, options_for_select(SimulationField::DELAY_TYPES), {}, {class: 'form-select form-control'}
+      .col-md-12
+        .form-group
+          = f.text_field :delay_value, class: 'form-control', placeholder: 1
+  .col-md-3
+    .row
+      .col-md-12
+        .form-group
+          button.btn.btn-lg.btn-light[type="button"]
+            | ⌃
+          button.btn.btn-lg.btn-light[type="button"]
+            | ⌄
+      .col-md-12
+        .form-group
+          = link_to_remove_association(f, {data: {confirm: 'Are you sure?'}, class: 'remove_fields dynamic table_delete'}) do
+            = image_tag('70.png')
+            |  Delete 

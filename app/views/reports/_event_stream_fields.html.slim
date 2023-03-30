@@ -1,0 +1,11 @@
+- @event_stream.event_stream_fields.each do |esf|
+  tr
+    td width="30%" 
+      .form-group
+        = text_field_tag "report[report_items_attributes][#{element_number}][data][filters][][field]", esf.name, class: 'form-control', id: 'field_name', readonly: true
+    td width="20%" 
+      .form-group
+        = select_tag "report[report_items_attributes][#{element_number}][data][filters][][operator]", options_for_select(ApplicationRecord::SQL_OPERATORS), id: 'event_stream_id', class: 'form-control form-select'
+    td width="20%" 
+      .form-group
+        = text_field_tag "report[report_items_attributes][#{element_number}][data][filters][][value]", "", class: 'form-control', id: 'field_value', placeholder: 'Value'

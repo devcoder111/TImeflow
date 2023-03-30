@@ -1,0 +1,37 @@
+<%= form_with(model: simulation_step) do |form| %>
+  <% if simulation_step.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(simulation_step.errors.count, "error") %> prohibited this simulation_step from being saved:</h2>
+
+      <ul>
+        <% simulation_step.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :sm_type %>
+    <%= form.text_field :sm_type %>
+  </div>
+
+  <div class="field">
+    <%= form.label :simulation_id %>
+    <%= form.text_field :simulation_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
